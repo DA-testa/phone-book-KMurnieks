@@ -6,6 +6,7 @@ class Query:
         self.number = int(query[1])
         if self.type == 'add':
             self.name = query[2]
+            self.surname = query[3]
 
 def read_queries():
     n = int(input())
@@ -17,20 +18,17 @@ def write_responses(result):
 def process_queries(queries):
     result = []
     contacts = [None] * 10000000
-    contacts = []
     for cur_query in queries:
         if cur_query.type == 'add':
-            # if we already have contact with such number,
-           contacts[cur_query.number] = cur_query.name
-            # we should rewrite contact's name
+            contacts[cur_query.number] = (cur_query.name, cur_query.surname)
         elif cur_query.type == 'del':
-           contacts[cur_query.number] = None
+            contacts[cur_query.number] = None
         else:
-           if contacts[cur_query.number] is None:
-               response = "not found"
-           else:
-               response = contacts[cur_query.number]
-           result.append(response)
+            if contacts[cur_query.number] is None:
+                response = "not found"
+            else:
+                response = ' '.join(contacts[cur_query.number])
+            result.append(response)
     return result
 
 if __name__ == '__main__':

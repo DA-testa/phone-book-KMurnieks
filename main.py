@@ -21,16 +21,16 @@ def process_queries(queries):
     for cur_query in queries:
         if cur_query.type == 'add':
             # if we already have contact with such number,
-            contacts[cur_query.number] = cur_query.name
+           contacts[cur_query.number] = cur_query.name
             # we should rewrite contact's name
-         elif cur_query.type == 'del':
-            contacts[cur_query.number] = None
-         else:
-            if contacts[cur_query.number] is None:
-                response = "not found"
-            else:
-                response = contacts[cur_query.number]
-            result.append(response)
+        elif cur_query.type == 'del':
+           contacts[cur_query.number] = None
+        else:
+           if contacts[cur_query.number] is None:
+               response = "not found"
+           else:
+               response = contacts[cur_query.number]
+           result.append(response)
     return result
 
 if __name__ == '__main__':

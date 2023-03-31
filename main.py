@@ -16,20 +16,21 @@ def write_responses(result):
 
 def process_queries(queries):
     result = []
-    # Keep list of all existing (i.e. not deleted yet) contacts.
+    contacts = [None] * 10000000
     contacts = []
     for cur_query in queries:
         if cur_query.type == 'add':
             # if we already have contact with such number,
-            phone_book[cur_query.number] = cur_query.name
+            contacts[cur_query.number] = cur_query.name
             # we should rewrite contact's name
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    phone_book[cur_query.number] = cur_query.name    
-                elif cur_query.type == 'del':
-                    phone_book.pop(cur_query.number, None)
-                else:
-                    result.append(phone_book.get(cur_query.number, 'not found'))
+         elif cur_query.type == 'del':
+            contacts[cur_query.number] = None
+         else:
+            if contacts[cur_query.number] is None:
+                response = "not found"
+            else:
+                response = contacts[cur_query.number]
+            result.append(response)
     return result
 
 if __name__ == '__main__':

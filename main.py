@@ -16,14 +16,14 @@ def write_responses(result):
 
 def process_queries(queries):
     result = []
-    contacts = {}
+    phonebook = {}
     for cur_query in queries:
         if cur_query.type == 'add':
-            contacts[cur_query.number] = cur_query.name
+            phonebook[cur_query.number] = cur_query.name
         elif cur_query.type == 'del':
-            contacts.pop(cur_query.number, None)
+            phonebook.pop(cur_query.number, None)
         else:
-            response = contacts.get(cur_query.number, "not found")
+            response = phonebook.get(cur_query.number, "not found")
             result.append(response)
     return result
 

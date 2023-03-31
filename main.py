@@ -10,24 +10,21 @@ class Query:
 
 def read_queries():
     n = int(input())
-    return [Query(input().split()) for i in range(n)]
+    return [Query(input().strip().split()) for i in range(n)]
 
 def write_responses(result):
     print('\n'.join(result))
 
 def process_queries(queries):
     result = []
-    contacts = [None] * 10000000
+    contacts = {}
     for cur_query in queries:
         if cur_query.type == 'add':
-            contacts[cur_query.number] = (cur_query.name, cur_query.surname)
+            contacts[cur_query.number] = cur_query.name
         elif cur_query.type == 'del':
-            contacts[cur_query.number] = None
+            contacts.pop(cur_query.number, None)
         else:
-            if contacts[cur_query.number] is None:
-                response = "not found"
-            else:
-                response = ' '.join(contacts[cur_query.number])
+            response = contacts.get(cur_query.number, "not found")
             result.append(response)
     return result
 
